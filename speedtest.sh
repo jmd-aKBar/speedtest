@@ -7,6 +7,9 @@ DB_HOST="${DB_HOST:-http://localhost:8086}"
 DB_NAME="${DB_NAME:-speedtest}"
 DB_USERNAME="${DB_USERNAME:-admin}"
 DB_PASSWORD="${DB_PASSWORD:-password}"
+DB_BUCKET="${DB_BUCKET:-}"
+DB_ORG="${DB_ORG:-}"
+DB_APICODE="${DB_APICODE:-}"
 
 run_speedtest()
 {
@@ -25,10 +28,8 @@ run_speedtest()
     if $DB_SAVE; 
     then
         echo "Saving values to database..."
-        curl -s -S -XPOST "$DB_HOST/write?db=$DB_NAME&precision=s&u=$DB_USERNAME&p=$DB_PASSWORD" \
-            --data-binary "download,host=$HOSTNAME value=$DOWNLOAD $DATE"
-        curl -s -S -XPOST "$DB_HOST/write?db=$DB_NAME&precision=s&u=$DB_USERNAME&p=$DB_PASSWORD" \
-            --data-binary "upload,host=$HOSTNAME value=$UPLOAD $DATE"
+        curl -s -S -XPOST "$DB_HOST/api/v2/write?org=$DB_ORG&bucket=$DB_BUCKET&db=$DB_NAME&precision=s&u=$DB_USERNAME&p=$DB_PASSWORD" --header "Authorization: Token $DB_APICODE" --data-binary "download,host=$HOSTNAME value=$DOWNLOAD $DATE"
+        curl -s -S -XPOST "$DB_HOST/api/v2/write?org=$DB_ORG&bucket=$DB_BUCKET&db=$DB_NAME&precision=s&u=$DB_USERNAME&p=$DB_PASSWORD" --header "Authorization: Token $DB_APICODE" --data-binary "upload,host=$HOSTNAME value=$UPLOAD $DATE"
         echo "Values saved."
     fi
 }
