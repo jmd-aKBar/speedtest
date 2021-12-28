@@ -21,11 +21,13 @@ run_speedtest()
     JSON=$(speedtest --accept-license --accept-gdpr -f json)
     DOWNLOAD="$(echo $JSON | jq -r '.download.bandwidth')"
     UPLOAD="$(echo $JSON | jq -r '.upload.bandwidth')"
-    echo "Your download speed is $(($DOWNLOAD  / 125000 )) Mbps ($DOWNLOAD Bytes/s)."
-    echo "Your upload speed is $(($UPLOAD  / 125000 )) Mbps ($UPLOAD Bytes/s)."
+
+    # The next two lines show the results on the console (and the log)
+    echo "Your download speed at $(date +"%Y-%m-%d %H:%M:%S") is $(($DOWNLOAD / 125000 )) Mbps ($DOWNLOAD Bytes/s)."
+    echo "Your upload speed at $(date +"%Y-%m-%d %H:%M:%S") is $(($UPLOAD / 125000 )) Mbps ($UPLOAD Bytes/s)."
 
     # Save results in the database
-    if $DB_SAVE; 
+    if $DB_SAVE;
     then
         echo "Saving values to database..."
         curl -s -S -XPOST "$DB_HOST/api/v2/write?org=$DB_ORG&bucket=$DB_BUCKET&db=$DB_NAME&precision=s&u=$DB_USERNAME&p=$DB_PASSWORD" --header "Authorization: Token $DB_APICODE" --data-binary "download,host=$HOSTNAME value=$DOWNLOAD $DATE"
@@ -44,5 +46,5 @@ then
         sleep $LOOP_DELAY
     done
 else
-    run_speedtest   
+    run_speedtest
 fi

@@ -27,6 +27,9 @@ Your upload speed is 42 Mbps (4012944 Bytes/s).
 | `DB_NAME`            | `speedtest`             | InfluxDB Database name            |
 | `DB_USERNAME`        | `admin`                 | InfluxDB Username                 |
 | `DB_PASSWORD`        | `password`              | InfluxDB Password                 |
+| `DB_BUCKET`          | ``                      | InfluxDB Bucket GUID              |
+| `DB_ORG`             | ``                      | InfluxDB Organization GUID        |
+| `DB_APICODE`         | ``                      | InfluxDB HTTP Token               |
 
 ## Grafana and InfluxDB
 
