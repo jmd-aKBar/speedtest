@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 # Install basics
-RUN apt update && apt install -y curl jq gnupg1 apt-transport-https dirmngr
+RUN apt update && apt install -y curl jq gnupg1 apt-transport-https dirmngr awk
 
 # Install speedtest cli
 RUN curl -s https://install.speedtest.net/app/cli/install.deb.sh | bash

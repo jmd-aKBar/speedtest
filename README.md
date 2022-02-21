@@ -4,10 +4,11 @@
 
 [![Docker](https://img.shields.io/badge/Docker%20Hub-robinmanuelthiel/speedtest-blue.svg?logo=docker)](https://hub.docker.com/r/robinmanuelthiel/speedtest/)
 
-Check your internet bandwidth using the [Speedtest CLI](https://www.speedtest.net/apps/cli) from a Docker container. You can configure the tool to run periodically and save the results to an InfluxDB for visualization or long-term records.
+Check your internet bandwidth using the [Speedtest CLI](https://www.speedtest.net/apps/cli) from a Docker container. This Docker container also pings the CloudFlare DNS (1.1.1.1), OpenDNS (208.67.222.222), and Google DNS (8.8.8.8) to determine the "quality" of your internet connection. You can configure the tool to run periodically and save the results to an InfluxDB for visualization or long-term records.
+
 
 ```bash
-$ docker run --rm robinmanuelthiel/speedtest:latest
+$ docker run --rm jmdakbar/speedtest:latest
 ```
 
 The result will then look like this:
